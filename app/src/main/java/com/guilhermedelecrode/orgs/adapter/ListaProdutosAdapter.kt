@@ -10,19 +10,21 @@ import com.guilhermedelecrode.orgs.R
 import com.guilhermedelecrode.orgs.model.Produto
 
 class ListaProdutosAdapter(
-    private val produtos: List<Produto>,
-    private val context : Context
+    produtos: List<Produto>,
+    private val context: Context
 ) : RecyclerView.Adapter<ListaProdutosAdapter.ViewHolder>() {
+
+    private val produtos = produtos.toMutableList()
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         fun vincula(produtos: Produto) {
-            val nome = itemView.findViewById<TextView>(R.id.nome)
+            val nome = itemView.findViewById<TextView>(R.id.produto_item_nome)
             nome.text = produtos.nome
 
-            val descricao = itemView.findViewById<TextView>(R.id.descricao)
+            val descricao = itemView.findViewById<TextView>(R.id.produto_item_descricao)
             descricao.text = produtos.descricao
 
-            val valor = itemView.findViewById<TextView>(R.id.valor)
+            val valor = itemView.findViewById<TextView>(R.id.produto_item_valor)
             valor.text = produtos.valor.toPlainString()
         }
     }
@@ -32,6 +34,7 @@ class ListaProdutosAdapter(
         val view = inflater.inflate(R.layout.produto_item, parent, false)
         return ViewHolder(view)
     }
+
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val produtos = produtos[position]
         holder.vincula(produtos)
@@ -39,5 +42,9 @@ class ListaProdutosAdapter(
 
     override fun getItemCount(): Int = produtos.size
 
-
+    fun atualiza(produtos: List<Produto>) {
+        this.produtos.clear()
+        this.produtos.addAll(produtos)
+        notifyDataSetChanged()
+    }
 }

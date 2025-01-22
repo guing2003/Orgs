@@ -7,7 +7,7 @@
 
 
     <TextView
-        android:id="@+id/nome"
+        android:id="@+id/produto_item_nome"
         android:layout_margin="16dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -17,23 +17,23 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/descricao"
+        android:id="@+id/produto_item_descricao"
         android:layout_marginLeft="16dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         tools:text="Laranja, Manga, Uva"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/nome"  />
+        app:layout_constraintTop_toBottomOf="@id/produto_item_nome"  />
 
     <TextView
-        android:id="@+id/valor"
+        android:id="@+id/produto_item_valor"
         android:layout_marginLeft="16dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         tools:text="R$: 9,99"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/descricao" />
+        app:layout_constraintTop_toBottomOf="@id/produto_item_descricao" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
