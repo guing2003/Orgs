@@ -2,7 +2,7 @@ package com.guilhermedelecrode.orgs.model
 
 import java.math.BigDecimal
 
-data class Produtos(
+data class Produto(
     val nome: String,
     val descricao: String,
     val valor: BigDecimal

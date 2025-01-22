@@ -6,8 +6,9 @@ import android.view.View
 import android.widget.Button
 import android.widget.EditText
 import androidx.appcompat.app.AppCompatActivity
+import com.guilhermedelecrode.orgs.DAO.ProdutosDAO
 import com.guilhermedelecrode.orgs.R
-import com.guilhermedelecrode.orgs.model.Produtos
+import com.guilhermedelecrode.orgs.model.Produto
 import java.math.BigDecimal
 
 class FormularioProdutoActivity : AppCompatActivity() {
@@ -34,13 +35,18 @@ class FormularioProdutoActivity : AppCompatActivity() {
                     BigDecimal(valorEmTexto)
                 }
 
-                val novoProduto = Produtos(
+                val novoProduto = Produto(
                     nome = nome,
                     descricao = descricao,
                     valor = valor
                 )
 
                 Log.i("FormularioProduto", "onCreate: $novoProduto")
+                val dao = ProdutosDAO()
+
+                dao.adiciona(novoProduto)
+                Log.i("FormularioProduto", "onClick: ${dao.buscaTodos()} ")
+                finish()
             }
         })
 

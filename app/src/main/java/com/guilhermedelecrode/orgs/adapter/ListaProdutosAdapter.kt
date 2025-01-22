@@ -7,16 +7,15 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.guilhermedelecrode.orgs.R
-import com.guilhermedelecrode.orgs.model.Produtos
-import org.w3c.dom.Text
+import com.guilhermedelecrode.orgs.model.Produto
 
 class ListaProdutosAdapter(
-    private val produtos: List<Produtos>,
+    private val produtos: List<Produto>,
     private val context : Context
 ) : RecyclerView.Adapter<ListaProdutosAdapter.ViewHolder>() {
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        fun vincula(produtos: Produtos) {
+        fun vincula(produtos: Produto) {
             val nome = itemView.findViewById<TextView>(R.id.nome)
             nome.text = produtos.nome
 

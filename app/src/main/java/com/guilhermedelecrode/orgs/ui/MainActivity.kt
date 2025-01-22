@@ -2,14 +2,14 @@ package com.guilhermedelecrode.orgs.ui
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
+import com.guilhermedelecrode.orgs.DAO.ProdutosDAO
 import com.guilhermedelecrode.orgs.R
 import com.guilhermedelecrode.orgs.adapter.ListaProdutosAdapter
-import com.guilhermedelecrode.orgs.model.Produtos
-import java.math.BigDecimal
 
 class MainActivity : AppCompatActivity() {
 
@@ -17,23 +17,15 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+    }
+
+    override fun onResume() {
+        super.onResume()
+        val dao = ProdutosDAO()
+
         val recyclerView = findViewById<RecyclerView>(R.id.recyclerView)
         recyclerView.adapter = ListaProdutosAdapter(
-            context = this, produtos = listOf(
-                Produtos(
-                    nome = "Teste",
-                    descricao = "Teste Desc",
-                    valor = BigDecimal("19.99")
-                ), Produtos(
-                    nome = "Teste 1",
-                    descricao = "Teste Desc 1",
-                    valor = BigDecimal("29.99")
-                ), Produtos(
-                    nome = "Teste 2",
-                    descricao = "Teste Desc 2",
-                    valor = BigDecimal("39.99")
-                )
-            )
+            context = this, produtos = dao.buscaTodos()
         )
         recyclerView.layoutManager = LinearLayoutManager(this)
 
@@ -43,5 +35,9 @@ class MainActivity : AppCompatActivity() {
             val intent = Intent(this, FormularioProdutoActivity::class.java)
             startActivity(intent)
         }
+
+        Log.i("MainActivity", "onResume: ${dao.buscaTodos()} ")
     }
+
+
 }
