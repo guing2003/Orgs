@@ -5,11 +5,9 @@ import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
-import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.guilhermedelecrode.orgs.DAO.ProdutosDAO
-import com.guilhermedelecrode.orgs.R
 import com.guilhermedelecrode.orgs.adapter.ListaProdutosAdapter
+import com.guilhermedelecrode.orgs.databinding.ActivityListaProdutosBinding
 
 class ListaProdutosActivity : AppCompatActivity() {
     private val dao = ProdutosDAO()
@@ -17,11 +15,20 @@ class ListaProdutosActivity : AppCompatActivity() {
         context = this, produtos = dao.buscaTodos()
     )
 
+    // ViewBinding
+    private lateinit var binding: ActivityListaProdutosBinding
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_lista_produtos)
 
-        configuraRecyclerView()
+        // Inflando o layout usando ViewBinding
+        binding = ActivityListaProdutosBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+
+        val recyclerView = binding.activityListaProdutoRecyclerView
+        recyclerView.adapter = adapter
+        recyclerView.layoutManager = LinearLayoutManager(this)
+
         configuraFab()
     }
 
@@ -32,7 +39,8 @@ class ListaProdutosActivity : AppCompatActivity() {
     }
 
     private fun configuraFab() {
-        val fab = findViewById<FloatingActionButton>(R.id.activity_lista_produto_fab)
+        // Utilizando ViewBinding para acessar o FAB
+        val fab = binding.activityListaProdutoFab
         fab.setOnClickListener {
             vaiParaFormularioProduto()
         }
@@ -41,11 +49,5 @@ class ListaProdutosActivity : AppCompatActivity() {
     private fun vaiParaFormularioProduto() {
         val intent = Intent(this, FormularioProdutoActivity::class.java)
         startActivity(intent)
-    }
-
-    private fun configuraRecyclerView() {
-        val recyclerView = findViewById<RecyclerView>(R.id.activity_lista_produto_recyclerView)
-        recyclerView.adapter = adapter
-        recyclerView.layoutManager = LinearLayoutManager(this)
     }
 }
