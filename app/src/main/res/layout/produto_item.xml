@@ -8,32 +8,40 @@
 
     <TextView
         android:id="@+id/produto_item_nome"
-        android:layout_margin="16dp"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        tools:text="Cesta de Frutas"
+        android:layout_margin="16dp"
+        app:layout_constraintStart_toEndOf="@id/imageView"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="Cesta de Frutas" />
 
     <TextView
         android:id="@+id/produto_item_descricao"
-        android:layout_marginLeft="16dp"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        tools:text="Laranja, Manga, Uva"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/produto_item_nome"  />
+        app:layout_constraintEnd_toEndOf="@+id/produto_item_nome"
+        app:layout_constraintStart_toStartOf="@+id/produto_item_nome"
+        app:layout_constraintTop_toBottomOf="@+id/produto_item_nome"
+        tools:text="Laranja, Manga, Uva" />
 
     <TextView
         android:id="@+id/produto_item_valor"
-        android:layout_marginLeft="16dp"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        tools:text="R$: 9,99"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/produto_item_nome"
+        app:layout_constraintTop_toBottomOf="@+id/produto_item_descricao"
+        tools:text="R$: 9,99" />
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        app:srcCompat="@drawable/produtos"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/produto_item_descricao" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/produto_item_nome"
+        android:scaleType="centerCrop"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
