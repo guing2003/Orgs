@@ -55,11 +55,13 @@
             app:layout_constraintTop_toBottomOf="@+id/produto_item_descricao"
             tools:text="R$: 9,99" />
 
+
         <ImageView
             android:id="@+id/imageView"
-            android:layout_width="100dp"
+            android:layout_width="0dp"
             android:layout_height="0dp"
             android:scaleType="centerCrop"
+            app:layout_constraintWidth_percent="0.3"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/produto_item_nome"
             app:layout_constraintStart_toStartOf="parent"

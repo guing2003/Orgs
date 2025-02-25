@@ -40,7 +40,7 @@ class FormularioProdutoActivity : AppCompatActivity() {
     private fun criaProduto(): Produto {
         val nome = binding.activityFormularioProdutoNome.text.toString()
         val descricao = binding.activityFormularioProdutoDescricao.text.toString()
-        val valorEmTexto = binding.activityFormularioProdutoItemValor.text.toString()
+        val valorEmTexto = binding.activityFormularioProdutoValor.text.toString()
 
         val valor = if (valorEmTexto.isBlank()) {
             BigDecimal.ZERO

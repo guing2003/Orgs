@@ -39,8 +39,7 @@ class ListaProdutosActivity : AppCompatActivity() {
     }
 
     private fun configuraFab() {
-        // Utilizando ViewBinding para acessar o FAB
-        val fab = binding.activityListaProdutoFab
+        val fab = binding.activityListaProdutoExtendedFab
         fab.setOnClickListener {
             vaiParaFormularioProduto()
         }
