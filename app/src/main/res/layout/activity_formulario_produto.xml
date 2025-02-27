@@ -14,7 +14,7 @@
         tools:context=".ui.FormularioProdutoActivity">
 
         <ImageView
-            android:id="@+id/activity_formulario_produto_image"
+            android:id="@+id/activity_formularioproduto_imagem"
             android:layout_width="0dp"
             android:layout_height="200dp"
             android:scaleType="centerCrop"
@@ -22,7 +22,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/produtos"
+            app:srcCompat="@drawable/imagem_padrao"
             tools:layout_editor_absoluteX="130dp"
             tools:layout_editor_absoluteY="21dp" />
 
@@ -32,7 +32,7 @@
             android:layout_height="wrap_content"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/activity_formulario_produto_image"
+            app:layout_constraintTop_toBottomOf="@id/activity_formularioproduto_imagem"
             tools:layout_editor_absoluteX="1dp"
             tools:layout_editor_absoluteY="461dp"
             android:layout_marginTop="24dp"
@@ -43,7 +43,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="16dp"
-                android:hint="Nome" />
+                android:hint="Nome"
+                android:inputType="text"/>
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
@@ -62,7 +63,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="16dp"
-                android:hint="Descrição" />
+                android:hint="Descrição"
+                android:inputType="text"/>
 
         </com.google.android.material.textfield.TextInputLayout><com.google.android.material.textfield.TextInputLayout
             android:id="@+id/textinputlayout_valor"

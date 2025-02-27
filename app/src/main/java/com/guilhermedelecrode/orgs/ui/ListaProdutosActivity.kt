@@ -7,6 +7,7 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.guilhermedelecrode.orgs.DAO.ProdutosDAO
+import com.guilhermedelecrode.orgs.R
 import com.guilhermedelecrode.orgs.adapter.ListaProdutosAdapter
 import com.guilhermedelecrode.orgs.databinding.ActivityListaProdutosBinding
 
@@ -31,17 +32,6 @@ class ListaProdutosActivity : AppCompatActivity() {
         recyclerView.layoutManager = LinearLayoutManager(this)
 
         configuraFab()
-
-        AlertDialog.Builder(this)
-            .setTitle("Teste Titulo")
-            .setMessage("Teste Mensagem")
-            .setPositiveButton("Sim") {_,_ ->
-
-            }
-            .setNegativeButton("Não"){_,_ ->
-
-            }
-            .show()
     }
 
     override fun onResume() {

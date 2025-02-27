@@ -2,8 +2,10 @@ package com.guilhermedelecrode.orgs.ui
 
 import android.os.Bundle
 import android.util.Log
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import com.guilhermedelecrode.orgs.DAO.ProdutosDAO
+import com.guilhermedelecrode.orgs.R
 import com.guilhermedelecrode.orgs.databinding.ActivityFormularioProdutoBinding
 import com.guilhermedelecrode.orgs.model.Produto
 import java.math.BigDecimal
@@ -23,6 +25,18 @@ class FormularioProdutoActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         configuraBotaoSalvar()
+
+        binding.activityFormularioprodutoImagem.setOnClickListener{
+            AlertDialog.Builder(this)
+                .setView(R.layout.formulario_imagem)
+                .setPositiveButton("Sim") {_,_ ->
+
+                }
+                .setNegativeButton("Não"){_,_ ->
+
+                }
+                .show()
+        }
     }
 
     private fun configuraBotaoSalvar() {
