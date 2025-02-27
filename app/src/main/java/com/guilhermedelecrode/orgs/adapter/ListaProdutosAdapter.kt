@@ -1,15 +1,15 @@
 package com.guilhermedelecrode.orgs.adapter
 
 import android.content.Context
-
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import coil.load
 import com.guilhermedelecrode.orgs.databinding.ProdutoItemBinding
 import com.guilhermedelecrode.orgs.model.Produto
 import java.math.BigDecimal
-import java.util.Locale
 import java.text.NumberFormat
+import java.util.Locale
 
 class ListaProdutosAdapter(
     produtos: List<Produto>,
@@ -20,6 +20,7 @@ class ListaProdutosAdapter(
 
     class ViewHolder(private val binding: ProdutoItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
+
         fun vincula(produto: Produto) {
             val nome = binding.produtoItemNome
             nome.text = produto.nome
@@ -29,14 +30,16 @@ class ListaProdutosAdapter(
 
             val valorEmMoeda: String = formataParaMoedaBrasileira(produto.valor)
             valor.text = valorEmMoeda
+
+            binding.imageView.load("https://minhasaude.proteste.org.br/wp-content/webp-express/webp-images/uploads/2022/10/muitas-laranjas.png.webp")
         }
+
         private fun formataParaMoedaBrasileira(valor: BigDecimal): String {
             val formatador: NumberFormat = NumberFormat
                 .getCurrencyInstance(Locale("pt", "br"))
             return formatador.format(valor)
         }
     }
-
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
