@@ -9,6 +9,7 @@ import com.guilhermedelecrode.orgs.DAO.ProdutosDAO
 import com.guilhermedelecrode.orgs.databinding.ActivityFormularioProdutoBinding
 import com.guilhermedelecrode.orgs.databinding.FormularioImagemBinding
 import com.guilhermedelecrode.orgs.model.Produto
+import com.guilhermedelecrode.orgs.ui.dialog.FormularioImagemDialog
 import java.math.BigDecimal
 
 class FormularioProdutoActivity : AppCompatActivity() {
@@ -17,6 +18,7 @@ class FormularioProdutoActivity : AppCompatActivity() {
 
     // ViewBinding
     private lateinit var binding: ActivityFormularioProdutoBinding
+    private var url: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -25,24 +27,11 @@ class FormularioProdutoActivity : AppCompatActivity() {
 
         configuraBotaoSalvar()
 
-        binding.activityFormularioprodutoImagem.setOnClickListener{
-            val bindingFormularioImagem = FormularioImagemBinding.inflate(layoutInflater)
-            bindingFormularioImagem.formularioImagemBotaoCarregar.setOnClickListener {
-                val url = bindingFormularioImagem.formularioTextUrl.text.toString()
-                bindingFormularioImagem.formularioImagemImageview.load(url)
+        binding.activityFormularioprodutoImagem.setOnClickListener {
+            FormularioImagemDialog(this).mostra { imagem ->
+                url = imagem
+                binding.activityFormularioprodutoImagem.load(url)
             }
-            AlertDialog.Builder(this)
-                .setView(bindingFormularioImagem.root)
-                .setPositiveButton("Sim") {_,_ ->
-                    val url = bindingFormularioImagem.formularioTextUrl.text.toString()
-                    binding.activityFormularioprodutoImagem.load(url)
-
-
-                }
-                .setNegativeButton("Não"){_,_ ->
-
-                }
-                .show()
         }
     }
 
@@ -72,7 +61,8 @@ class FormularioProdutoActivity : AppCompatActivity() {
         return Produto(
             nome = nome,
             descricao = descricao,
-            valor = valor
+            valor = valor,
+            imagem = url
         )
     }
 }

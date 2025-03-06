@@ -2,9 +2,11 @@ package com.guilhermedelecrode.orgs.adapter
 
 import android.content.Context
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
+import com.guilhermedelecrode.orgs.R
 import com.guilhermedelecrode.orgs.databinding.ProdutoItemBinding
 import com.guilhermedelecrode.orgs.model.Produto
 import java.math.BigDecimal
@@ -31,7 +33,18 @@ class ListaProdutosAdapter(
             val valorEmMoeda: String = formataParaMoedaBrasileira(produto.valor)
             valor.text = valorEmMoeda
 
-            binding.imageView.load("https://minhasaude.proteste.org.br/wp-content/webp-express/webp-images/uploads/2022/10/muitas-laranjas.png.webp")
+            val visibilade = if(produto.imagem != null){
+                View.VISIBLE
+            } else {
+                View.GONE
+            }
+
+            binding.imageView.visibility = visibilade
+
+            binding.imageView.load(produto.imagem) {
+                fallback(R.drawable.erro)
+                error(R.drawable.erro)
+            }
         }
 
         private fun formataParaMoedaBrasileira(valor: BigDecimal): String {

@@ -10,6 +10,7 @@ import com.guilhermedelecrode.orgs.DAO.ProdutosDAO
 import com.guilhermedelecrode.orgs.R
 import com.guilhermedelecrode.orgs.adapter.ListaProdutosAdapter
 import com.guilhermedelecrode.orgs.databinding.ActivityListaProdutosBinding
+import com.guilhermedelecrode.orgs.ui.dialog.FormularioImagemDialog
 
 class ListaProdutosActivity : AppCompatActivity() {
     private val dao = ProdutosDAO()
@@ -32,6 +33,9 @@ class ListaProdutosActivity : AppCompatActivity() {
         recyclerView.layoutManager = LinearLayoutManager(this)
 
         configuraFab()
+        FormularioImagemDialog(this).mostra { imagem ->
+            Log.i("ListaProdutoActivity", "onCreate: $imagem ")
+        }
     }
 
     override fun onResume() {
