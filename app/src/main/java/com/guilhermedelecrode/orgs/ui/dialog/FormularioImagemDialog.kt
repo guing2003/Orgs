@@ -9,26 +9,29 @@ import com.guilhermedelecrode.orgs.databinding.FormularioImagemBinding
 
 class FormularioImagemDialog(private val context: Context) {
 
-    fun mostra(quandoImagemCarregada:(imagem: String) -> Unit)  {
-        val binding = FormularioImagemBinding.inflate(LayoutInflater.from(context))
+    fun mostra(urlPadrao: String? = null, quandoImagemCarregada: (imagem: String) -> Unit) {
+        FormularioImagemBinding.inflate(LayoutInflater.from(context)).apply {
+            urlPadrao?.let {
+                formularioImagemImageview.load(it)
+                formularioTextUrl.setText(it)
+            }
 
-        binding.formularioImagemBotaoCarregar.setOnClickListener {
-            val url = binding.formularioTextUrl.text.toString()
-            binding.formularioImagemImageview.load(url)
+            formularioImagemBotaoCarregar.setOnClickListener {
+                val url = formularioTextUrl.text.toString()
+                formularioImagemImageview.load(url)
+            }
+            AlertDialog.Builder(context)
+                .setView(root)
+                .setPositiveButton("Confirmar") { _, _ ->
+                    val url = formularioTextUrl.text.toString()
+                    quandoImagemCarregada(url)
+
+                }
+                .setNegativeButton("Cancelar") { _, _ ->
+
+                }
+                .show()
         }
-        AlertDialog.Builder(context)
-            .setView(binding.root)
-            .setPositiveButton("Sim") { _, _ ->
-                val url = binding.formularioTextUrl.text.toString()
-                Log.i("FormularioImagemDialog", "$url")
-                quandoImagemCarregada(url)
-
-            }
-            .setNegativeButton("Não") { _, _ ->
-
-            }
-            .show()
     }
-
 }
 

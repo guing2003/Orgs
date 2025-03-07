@@ -24,11 +24,11 @@ class FormularioProdutoActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityFormularioProdutoBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
+        title = "Cadastrar Novo Produto"
         configuraBotaoSalvar()
 
         binding.activityFormularioprodutoImagem.setOnClickListener {
-            FormularioImagemDialog(this).mostra { imagem ->
+            FormularioImagemDialog(this).mostra(url) { imagem ->
                 url = imagem
                 binding.activityFormularioprodutoImagem.load(url)
             }

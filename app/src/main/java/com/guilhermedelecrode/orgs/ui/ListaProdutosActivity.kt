@@ -33,9 +33,7 @@ class ListaProdutosActivity : AppCompatActivity() {
         recyclerView.layoutManager = LinearLayoutManager(this)
 
         configuraFab()
-        FormularioImagemDialog(this).mostra { imagem ->
-            Log.i("ListaProdutoActivity", "onCreate: $imagem ")
-        }
+
     }
 
     override fun onResume() {
