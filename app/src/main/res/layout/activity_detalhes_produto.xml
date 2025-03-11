@@ -23,7 +23,7 @@
             app:srcCompat="@drawable/imagem_padrao" />
 
         <TextView
-            android:id="@+id/activity_text_valor"
+            android:id="@+id/activity_detalhes_produto_valor"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_marginStart="16dp"
@@ -40,7 +40,7 @@
             app:layout_constraintTop_toBottomOf="@id/activity_detalhes_produto_imageview" />
 
         <TextView
-            android:id="@+id/activity_detalhes_produtos_titulo"
+            android:id="@+id/activity_detalhes_produtos_nome"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_margin="16dp"
@@ -50,19 +50,20 @@
             android:fontFamily="@font/montserrat_bold"
             android:textSize="28sp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="@id/activity_text_valor"
-            app:layout_constraintTop_toBottomOf="@id/activity_text_valor"
+            app:layout_constraintStart_toStartOf="@id/activity_detalhes_produto_valor"
+            app:layout_constraintTop_toBottomOf="@id/activity_detalhes_produto_valor"
             tools:text="@tools:sample/lorem[0]" />
 
         <TextView
+            android:id="@+id/activity_detalhes_produtos_descricao"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:fontFamily="@font/montserrat"
             android:textSize="20sp"
-            app:layout_constraintEnd_toEndOf="@id/activity_detalhes_produtos_titulo"
+            app:layout_constraintEnd_toEndOf="@id/activity_detalhes_produtos_nome"
             app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="@id/activity_detalhes_produtos_titulo"
-            app:layout_constraintTop_toBottomOf="@id/activity_detalhes_produtos_titulo"
+            app:layout_constraintStart_toStartOf="@id/activity_detalhes_produtos_nome"
+            app:layout_constraintTop_toBottomOf="@id/activity_detalhes_produtos_nome"
             tools:text="@tools:sample/lorem/random" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

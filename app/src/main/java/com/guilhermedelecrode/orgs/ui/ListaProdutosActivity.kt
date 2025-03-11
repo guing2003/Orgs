@@ -3,19 +3,17 @@ package com.guilhermedelecrode.orgs.ui
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
-import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.guilhermedelecrode.orgs.DAO.ProdutosDAO
-import com.guilhermedelecrode.orgs.R
 import com.guilhermedelecrode.orgs.adapter.ListaProdutosAdapter
 import com.guilhermedelecrode.orgs.databinding.ActivityListaProdutosBinding
-import com.guilhermedelecrode.orgs.ui.dialog.FormularioImagemDialog
 
 class ListaProdutosActivity : AppCompatActivity() {
     private val dao = ProdutosDAO()
     private val adapter = ListaProdutosAdapter(
-        context = this, produtos = dao.buscaTodos()
+        context = this,
+        produtos = dao.buscaTodos()
     )
 
     // ViewBinding
@@ -28,12 +26,23 @@ class ListaProdutosActivity : AppCompatActivity() {
         binding = ActivityListaProdutosBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        val recyclerView = binding.activityListaProdutoRecyclerView
-        recyclerView.adapter = adapter
-        recyclerView.layoutManager = LinearLayoutManager(this)
+        configuraRecyclerView()
 
         configuraFab()
 
+    }
+
+    private fun configuraRecyclerView() {
+        val recyclerView = binding.activityListaProdutoRecyclerView
+        recyclerView.adapter = adapter
+        recyclerView.layoutManager = LinearLayoutManager(this)
+        adapter.quandoClicaNoItemlistener = {
+                Log.i("ListaProdutos", "quandoClica: ${it.nome}")
+            val intent = Intent(this, DetalhesProdutoActivity::class.java).apply {
+                putExtra("produto", it)
+            }
+            startActivity(intent)
+        }
     }
 
     override fun onResume() {

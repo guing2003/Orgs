@@ -1,6 +1,7 @@
 package com.guilhermedelecrode.orgs.adapter
 
 import android.content.Context
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -15,15 +16,29 @@ import java.util.Locale
 
 class ListaProdutosAdapter(
     produtos: List<Produto>,
-    private val context: Context
+    private val context: Context,
+    var quandoClicaNoItemlistener: (produto: Produto) -> Unit = {}
+
 ) : RecyclerView.Adapter<ListaProdutosAdapter.ViewHolder>() {
 
     private val produtos = produtos.toMutableList()
 
-    class ViewHolder(private val binding: ProdutoItemBinding) :
+
+    inner class ViewHolder(private val binding: ProdutoItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
+            private lateinit var produto: Produto
+
+        init {
+            itemView.setOnClickListener {
+                Log.i("ListaProduto", "Clicando no Item")
+                if(::produto.isInitialized){
+                    quandoClicaNoItemlistener(produto)
+                }
+            }
+        }
 
         fun vincula(produto: Produto) {
+            this.produto = produto
             val nome = binding.produtoItemNome
             nome.text = produto.nome
             val descricao = binding.produtoItemDescricao
@@ -33,7 +48,7 @@ class ListaProdutosAdapter(
             val valorEmMoeda: String = formataParaMoedaBrasileira(produto.valor)
             valor.text = valorEmMoeda
 
-            val visibilade = if(produto.imagem != null){
+            val visibilade = if (produto.imagem != null) {
                 View.VISIBLE
             } else {
                 View.GONE
