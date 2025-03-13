@@ -62,7 +62,8 @@ Escolha o emulador ou dispositivo físico conectado
 Pronto! O app será instalado e executado no dispositivo escolhido. 🚀                         
 
 📸 Demonstração                           
-Você pode incluir aqui um GIF ou um pequeno vídeo demonstrando o funcionamento do app.
+
+
 
 🔗Contato               
 guilhermedelecrode1710@gmail.com                                               
