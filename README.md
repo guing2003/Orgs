@@ -59,10 +59,13 @@ Dispositivo físico: Conecte via USB e ative a depuração USB nas configuraçõ
 5️⃣ Execute o projeto       
 Clique no botão Run ▶ no Android Studio                   
 Escolha o emulador ou dispositivo físico conectado                      
-Pronto! O app será instalado e executado no dispositivo escolhido. 🚀                         
+Pronto! O app será instalado e executado no dispositivo escolhido. 🚀   
 
-📸 Demonstração                           
-https://github.com/user-attachments/assets/574379c3-39de-4a81-a6bb-a79cc69757da
+## 🎥 Demonstração do App  
+
+[🎬 Assista ao vídeo](https://github.com/user-attachments/assets/574379c3-39de-4a81-a6bb-a79cc69757da)
+
+
 
 🔗Contato               
 guilhermedelecrode1710@gmail.com                                               
