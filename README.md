@@ -62,8 +62,7 @@ Escolha o emulador ou dispositivo físico conectado
 Pronto! O app será instalado e executado no dispositivo escolhido. 🚀                         
 
 📸 Demonstração                           
-
-
+https://github.com/user-attachments/assets/574379c3-39de-4a81-a6bb-a79cc69757da
 
 🔗Contato               
 guilhermedelecrode1710@gmail.com                                               
