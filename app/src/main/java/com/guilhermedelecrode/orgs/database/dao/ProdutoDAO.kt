@@ -1,0 +1,16 @@
+package com.guilhermedelecrode.orgs.database.dao
+
+import androidx.room.Dao
+import androidx.room.Insert
+import androidx.room.Query
+import com.guilhermedelecrode.orgs.model.Produto
+
+@Dao
+interface ProdutoDAO {
+
+    @Query("SELECT * FROM Produto")
+    fun buscaTodos() : List<Produto>
+
+    @Insert
+    fun salva(vararg produto: Produto)
+}
