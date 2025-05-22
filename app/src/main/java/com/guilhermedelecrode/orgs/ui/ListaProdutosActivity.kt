@@ -35,13 +35,12 @@ class ListaProdutosActivity : AppCompatActivity() {
 
     private fun showMenu(view: View, produto: Produto) {
         val popup = PopupMenu(this, view)
-        popup.menuInflater.inflate(R.menu.menu_pop_up_detalhes_produto, popup.menu)
+        popup.menuInflater.inflate(R.menu.menu_detalhes_produto, popup.menu)
 
         popup.setOnMenuItemClickListener { item ->
             when (item.itemId) {
                 R.id.menu_detalhes_produto_editar -> {
                     Log.i("PopupMenu", "ListaProduto: editar")
-
                     true
                 }
 
