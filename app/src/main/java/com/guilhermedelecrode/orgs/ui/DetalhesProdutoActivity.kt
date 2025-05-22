@@ -3,6 +3,7 @@ package com.guilhermedelecrode.orgs.ui
 import android.os.Bundle
 import android.util.Log
 import android.view.Menu
+import android.view.MenuItem
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
@@ -33,37 +34,68 @@ class DetalhesProdutoActivity : AppCompatActivity() {
         val valor = findViewById<TextView>(R.id.activity_detalhes_produto_valor)
 
         // Se produto != nulo, popula a tela com os dados
-        produto?.let {
-            nome.text = it.nome
-            descricao.text = it.descricao
-            valor.text = formataParaMoedaBrasileira(it.valor)
-
-            Log.i("DetalheProdutoActivity", "onCreate: ${it.imagem}")
-
-            if (!it.imagem.isNullOrEmpty()) {
-                val visibilade = if (it.imagem != null) {
-                    View.VISIBLE
-                } else {
-                    View.GONE
-                }
-                binding.activityDetalhesProdutoImageview.visibility = visibilade
-
-                binding.activityDetalhesProdutoImageview.load(it.imagem) {
-                    fallback(R.drawable.erro)
-                    error(R.drawable.erro)
-                }
-
-                imagem.load(it.imagem) {
-                    error(R.drawable.erro)
-                }
-            }
-        }
+        buscandoProduto(produto, nome, descricao, valor, imagem)
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.menu_detalhes_produto, menu)
         return super.onCreateOptionsMenu(menu)
     }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when(item.itemId){
+            R.id.menu_detalhes_produto_deletar -> {
+                Log.i("MENUS", "onOptionsItemSelected: Deletar")
+            }
+            R.id.menu_detalhes_produto_editar -> {
+                Log.i("MENUS", "onOptionsItemSelected: Editar")
+            }
+        }
+        return super.onOptionsItemSelected(item)
+    }
+
+    private fun buscandoProduto(
+        produto: Produto?,
+        nome: TextView,
+        descricao: TextView,
+        valor: TextView,
+        imagem: ImageView
+    ) {
+        produto?.let {
+            nome.text = it.nome
+            descricao.text = it.descricao
+            valor.text = formataParaMoedaBrasileira(it.valor)
+
+            VerificaImagem(it, imagem)
+        }
+    }
+
+    private fun VerificaImagem(
+        it: Produto,
+        imagem: ImageView
+    ) {
+        Log.i("DetalheProdutoActivity", "onCreate: ${it.imagem}")
+
+        if (!it.imagem.isNullOrEmpty()) {
+            val visibilade = if (it.imagem != null) {
+                View.VISIBLE
+            } else {
+                View.GONE
+            }
+            binding.activityDetalhesProdutoImageview.visibility = visibilade
+
+            binding.activityDetalhesProdutoImageview.load(it.imagem) {
+                fallback(R.drawable.erro)
+                error(R.drawable.erro)
+            }
+
+            imagem.load(it.imagem) {
+                error(R.drawable.erro)
+            }
+        }
+    }
+
+
 
     private fun formataParaMoedaBrasileira(valor: BigDecimal): String {
         val formatador: NumberFormat = NumberFormat
