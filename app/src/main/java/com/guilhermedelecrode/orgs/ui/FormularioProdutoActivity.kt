@@ -1,15 +1,10 @@
 package com.guilhermedelecrode.orgs.ui
 
 import android.os.Bundle
-import android.util.Log
-import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
-import androidx.room.Room
 import coil.load
-import com.guilhermedelecrode.orgs.DAO.ProdutosDAO
 import com.guilhermedelecrode.orgs.database.AppDatabase
 import com.guilhermedelecrode.orgs.databinding.ActivityFormularioProdutoBinding
-import com.guilhermedelecrode.orgs.databinding.FormularioImagemBinding
 import com.guilhermedelecrode.orgs.model.Produto
 import com.guilhermedelecrode.orgs.ui.dialog.FormularioImagemDialog
 import java.math.BigDecimal

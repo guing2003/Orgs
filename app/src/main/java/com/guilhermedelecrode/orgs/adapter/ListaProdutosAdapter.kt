@@ -15,7 +15,7 @@ import java.text.NumberFormat
 import java.util.Locale
 
 class ListaProdutosAdapter(
-    produtos: List<Produto>,
+    produtos: List<Produto> = emptyList(),
     private val context: Context,
     var quandoClicaNoItemlistener: (produto: Produto) -> Unit = {}
 

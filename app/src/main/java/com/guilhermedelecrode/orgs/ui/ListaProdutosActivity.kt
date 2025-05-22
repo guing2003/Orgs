@@ -5,19 +5,13 @@ import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.room.Room
-import com.guilhermedelecrode.orgs.DAO.ProdutosDAO
 import com.guilhermedelecrode.orgs.adapter.ListaProdutosAdapter
 import com.guilhermedelecrode.orgs.database.AppDatabase
 import com.guilhermedelecrode.orgs.databinding.ActivityListaProdutosBinding
-import com.guilhermedelecrode.orgs.model.Produto
-import java.math.BigDecimal
 
 class ListaProdutosActivity : AppCompatActivity() {
-    private val dao = ProdutosDAO()
     private val adapter = ListaProdutosAdapter(
-        context = this,
-        produtos = dao.buscaTodos()
+        context = this
     )
 
     // ViewBinding
@@ -40,7 +34,6 @@ class ListaProdutosActivity : AppCompatActivity() {
         val db = AppDatabase.instancia(this)
         val produtoDao = db.produtoDao()
         adapter.atualiza(produtoDao.buscaTodos())
-        Log.i("ListaProduto", "onResume: ${dao.buscaTodos()}")
     }
 
     private fun configuraRecyclerView() {
