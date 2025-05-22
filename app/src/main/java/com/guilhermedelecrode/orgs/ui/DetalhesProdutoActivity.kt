@@ -2,6 +2,7 @@ package com.guilhermedelecrode.orgs.ui
 
 import android.os.Bundle
 import android.util.Log
+import android.view.Menu
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
@@ -57,6 +58,11 @@ class DetalhesProdutoActivity : AppCompatActivity() {
                 }
             }
         }
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.menu_detalhes_produto, menu)
+        return super.onCreateOptionsMenu(menu)
     }
 
     private fun formataParaMoedaBrasileira(valor: BigDecimal): String {
