@@ -4,8 +4,10 @@ import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.room.Room
 import coil.load
 import com.guilhermedelecrode.orgs.DAO.ProdutosDAO
+import com.guilhermedelecrode.orgs.database.AppDatabase
 import com.guilhermedelecrode.orgs.databinding.ActivityFormularioProdutoBinding
 import com.guilhermedelecrode.orgs.databinding.FormularioImagemBinding
 import com.guilhermedelecrode.orgs.model.Produto
@@ -14,7 +16,7 @@ import java.math.BigDecimal
 
 class FormularioProdutoActivity : AppCompatActivity() {
 
-    private val dao = ProdutosDAO()
+
 
     // ViewBinding
     private lateinit var binding: ActivityFormularioProdutoBinding
@@ -33,16 +35,16 @@ class FormularioProdutoActivity : AppCompatActivity() {
                 binding.activityFormularioprodutoImagem.load(url)
             }
         }
+
     }
 
     private fun configuraBotaoSalvar() {
+        val db = AppDatabase.instancia(this)
+        val produtoDao = db.produtoDao()
+
         binding.activityFormularioProdutoBtnSalvar.setOnClickListener {
             val novoProduto = criaProduto()
-
-            Log.i("FormularioProduto", "onCreate: $novoProduto")
-
-            dao.adiciona(novoProduto)
-            Log.i("FormularioProduto", "onClick: ${dao.buscaTodos()} ")
+            produtoDao.salva(novoProduto)
             finish()
         }
     }
