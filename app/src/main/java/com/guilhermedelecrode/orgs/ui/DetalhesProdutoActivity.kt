@@ -45,10 +45,10 @@ class DetalhesProdutoActivity : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when(item.itemId){
             R.id.menu_detalhes_produto_deletar -> {
-                Log.i("MENUS", "onOptionsItemSelected: Deletar")
+                Log.i("Menu", "DetalhesProduto: Deletar")
             }
             R.id.menu_detalhes_produto_editar -> {
-                Log.i("MENUS", "onOptionsItemSelected: Editar")
+                Log.i("Menu", "DetalhesProduto: Editar")
             }
         }
         return super.onOptionsItemSelected(item)

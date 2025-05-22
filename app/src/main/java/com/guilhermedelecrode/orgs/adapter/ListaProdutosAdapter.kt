@@ -16,24 +16,28 @@ import java.util.Locale
 
 class ListaProdutosAdapter(
     produtos: List<Produto> = emptyList(),
-    private val context: Context,
-    var quandoClicaNoItemlistener: (produto: Produto) -> Unit = {}
-
+    private val context: Context
 ) : RecyclerView.Adapter<ListaProdutosAdapter.ViewHolder>() {
 
     private val produtos = produtos.toMutableList()
 
+    var quandoClicaNoItemlistener: (produto: Produto) -> Unit = {}
+    var quandoClicaESeguraNoItemListener: (view: View, produto: Produto) -> Unit = { _, _ -> }
 
     inner class ViewHolder(private val binding: ProdutoItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
             private lateinit var produto: Produto
-
         init {
             itemView.setOnClickListener {
                 Log.i("ListaProduto", "Clicando no Item")
                 if(::produto.isInitialized){
                     quandoClicaNoItemlistener(produto)
                 }
+            }
+
+            itemView.setOnLongClickListener {
+                quandoClicaESeguraNoItemListener(it, produto)
+                true
             }
         }
 
@@ -60,6 +64,7 @@ class ListaProdutosAdapter(
                 fallback(R.drawable.erro)
                 error(R.drawable.erro)
             }
+
         }
 
         private fun formataParaMoedaBrasileira(valor: BigDecimal): String {
