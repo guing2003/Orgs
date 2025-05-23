@@ -11,11 +11,10 @@ import java.math.BigDecimal
 
 class FormularioProdutoActivity : AppCompatActivity() {
 
-
-
     // ViewBinding
     private lateinit var binding: ActivityFormularioProdutoBinding
     private var url: String? = null
+    private var idProduto = 0L
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -29,6 +28,15 @@ class FormularioProdutoActivity : AppCompatActivity() {
                 url = imagem
                 binding.activityFormularioprodutoImagem.load(url)
             }
+        }
+
+        intent.getParcelableExtra<Produto>("produto")?.let { produtoCarregado ->
+            title = "Alterar Produto"
+            idProduto = produtoCarregado.id
+            binding.activityFormularioprodutoImagem.load(produtoCarregado.imagem)
+            binding.activityFormularioProdutoNome.setText(produtoCarregado.nome)
+            binding.activityFormularioProdutoDescricao.setText(produtoCarregado.descricao)
+            binding.activityFormularioProdutoValor.setText(produtoCarregado.valor.toPlainString())
         }
 
     }
