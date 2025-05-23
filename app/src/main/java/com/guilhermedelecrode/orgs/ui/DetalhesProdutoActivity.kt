@@ -10,6 +10,7 @@ import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import coil.load
 import com.guilhermedelecrode.orgs.R
+import com.guilhermedelecrode.orgs.database.AppDatabase
 import com.guilhermedelecrode.orgs.databinding.ActivityDetalhesProdutoBinding
 import com.guilhermedelecrode.orgs.model.Produto
 import java.math.BigDecimal
@@ -19,6 +20,7 @@ import java.util.Locale
 class DetalhesProdutoActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityDetalhesProdutoBinding
+    private lateinit var produto: Produto
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -26,7 +28,9 @@ class DetalhesProdutoActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         // Recebendo Produto Via Intent
-        val produto: Produto? = intent.getParcelableExtra("produto")
+        intent.getParcelableExtra<Produto>("produto")?.let { produtoCarregado ->
+            produto = produtoCarregado
+        }
 
         val imagem = findViewById<ImageView>(R.id.activity_detalhes_produto_imageview)
         val nome = findViewById<TextView>(R.id.activity_detalhes_produtos_nome)
@@ -43,12 +47,19 @@ class DetalhesProdutoActivity : AppCompatActivity() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when(item.itemId){
-            R.id.menu_detalhes_produto_deletar -> {
-                Log.i("Menu", "DetalhesProduto: Deletar")
-            }
-            R.id.menu_detalhes_produto_editar -> {
-                Log.i("Menu", "DetalhesProduto: Editar")
+        if (::produto.isInitialized) {
+            val db = AppDatabase.instancia(this)
+            val produtoDao = db.produtoDao()
+            when (item.itemId) {
+                R.id.menu_detalhes_produto_deletar -> {
+                    produtoDao.deletar(produto)
+                    finish()
+                    Log.i("Menu", "DetalhesProduto: Deletar")
+                }
+
+                R.id.menu_detalhes_produto_editar -> {
+                    Log.i("Menu", "DetalhesProduto: Editar")
+                }
             }
         }
         return super.onOptionsItemSelected(item)
@@ -94,7 +105,6 @@ class DetalhesProdutoActivity : AppCompatActivity() {
             }
         }
     }
-
 
 
     private fun formataParaMoedaBrasileira(valor: BigDecimal): String {
