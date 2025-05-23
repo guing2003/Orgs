@@ -53,7 +53,7 @@ class DetalhesProdutoActivity : AppCompatActivity() {
             val produtoDao = db.produtoDao()
             when (item.itemId) {
                 R.id.menu_detalhes_produto_deletar -> {
-                    produtoDao.deletar(produto)
+                    produtoDao.deleta(produto)
                     finish()
                     Log.i("Menu", "DetalhesProduto: Deletar")
                 }

@@ -17,8 +17,8 @@ interface ProdutoDAO {
     fun salva(vararg produto: Produto)
 
     @Delete
-    fun deletar(produto: Produto)
+    fun deleta(produto: Produto)
 
     @Update
-    fun atualizar(produto: Produto)
+    fun atualiza(produto: Produto)
 }
