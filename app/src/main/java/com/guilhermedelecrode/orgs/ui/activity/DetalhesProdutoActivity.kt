@@ -1,4 +1,4 @@
-package com.guilhermedelecrode.orgs.ui
+package com.guilhermedelecrode.orgs.ui.activity
 
 import android.content.Intent
 import android.os.Bundle
@@ -7,7 +7,6 @@ import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.widget.ImageView
-import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import coil.load
 import com.guilhermedelecrode.orgs.R
@@ -21,25 +20,29 @@ import java.util.Locale
 class DetalhesProdutoActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityDetalhesProdutoBinding
-    private lateinit var produto: Produto
+    private var produtoId : Long? =null
+    private var produto : Produto? = null
+
+    val produtoDao by lazy {
+        AppDatabase.instancia(this).produtoDao()
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityDetalhesProdutoBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
         // Recebendo Produto Via Intent
-        intent.getParcelableExtra<Produto>("produto")?.let { produtoCarregado ->
-            produto = produtoCarregado
+        tentaCarregarProduto()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        produtoId?.let { id ->
+            produto = produtoDao.buscaPorId(id)
         }
-
-        val imagem = findViewById<ImageView>(R.id.activity_detalhes_produto_imageview)
-        val nome = findViewById<TextView>(R.id.activity_detalhes_produtos_nome)
-        val descricao = findViewById<TextView>(R.id.activity_detalhes_produtos_descricao)
-        val valor = findViewById<TextView>(R.id.activity_detalhes_produto_valor)
-
-        // Se produto != nulo, popula a tela com os dados
-        buscandoProduto(produto, nome, descricao, valor, imagem)
+        produto?.let{
+            preencheCampos(it)
+        } ?: finish()
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -48,44 +51,38 @@ class DetalhesProdutoActivity : AppCompatActivity() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        if (::produto.isInitialized) {
-            val db = AppDatabase.instancia(this)
-            val produtoDao = db.produtoDao()
             when (item.itemId) {
                 R.id.menu_detalhes_produto_deletar -> {
-                    produtoDao.deleta(produto)
+                    produto?.let{produtoDao.deleta(it)}
                     finish()
-                    Log.i("Menu", "DetalhesProduto: Deletar")
                 }
 
                 R.id.menu_detalhes_produto_editar -> {
                     Intent(this, FormularioProdutoActivity::class.java)?.apply {
-                        putExtra("produto", produto)
+                        putExtra(CHAVE_PRODUTO, produto)
                         startActivity(this)
                     }
                 }
             }
-        }
         return super.onOptionsItemSelected(item)
     }
 
-    private fun buscandoProduto(
-        produto: Produto?,
-        nome: TextView,
-        descricao: TextView,
-        valor: TextView,
-        imagem: ImageView
-    ) {
-        produto?.let {
-            nome.text = it.nome
-            descricao.text = it.descricao
-            valor.text = formataParaMoedaBrasileira(it.valor)
+    private fun tentaCarregarProduto() {
+        intent.getParcelableExtra<Produto>(CHAVE_PRODUTO)?.let { produtoCarregado ->
+            produtoId = produtoCarregado.id
+        }?: finish()
+    }
 
-            VerificaImagem(it, imagem)
+    private fun preencheCampos(produtoCarregado : Produto){
+        with(binding){
+            verificaImagem(produtoCarregado, binding.activityDetalhesProdutoImageview)
+            activityDetalhesProdutosNome.text = produtoCarregado.nome
+            activityDetalhesProdutosDescricao.text = produtoCarregado.descricao
+            activityDetalhesProdutoValor.text = produtoCarregado.valor.formataParaMoedaBrasileira()
         }
     }
 
-    private fun VerificaImagem(
+    private fun verificaImagem(
         it: Produto,
         imagem: ImageView
     ) {
@@ -98,12 +95,10 @@ class DetalhesProdutoActivity : AppCompatActivity() {
                 View.GONE
             }
             binding.activityDetalhesProdutoImageview.visibility = visibilade
-
             binding.activityDetalhesProdutoImageview.load(it.imagem) {
                 fallback(R.drawable.erro)
                 error(R.drawable.erro)
             }
-
             imagem.load(it.imagem) {
                 error(R.drawable.erro)
             }
@@ -111,9 +106,10 @@ class DetalhesProdutoActivity : AppCompatActivity() {
     }
 
 
-    private fun formataParaMoedaBrasileira(valor: BigDecimal): String {
+    private fun BigDecimal.formataParaMoedaBrasileira(): String {
         val formatador: NumberFormat = NumberFormat
-            .getCurrencyInstance(Locale("pt", "br"))
-        return formatador.format(valor)
+            .getCurrencyInstance(Locale("pt", "BR"))
+        return formatador.format(this)
     }
+
 }

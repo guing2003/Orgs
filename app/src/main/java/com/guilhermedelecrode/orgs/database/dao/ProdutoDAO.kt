@@ -21,4 +21,7 @@ interface ProdutoDAO {
 
     @Update
     fun atualiza(produto: Produto)
+
+    @Query("SELECT * FROM PRODUTO WHERE id = :id")
+    fun buscaPorId(id: Long) : Produto?
 }

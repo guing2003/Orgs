@@ -1,4 +1,4 @@
-package com.guilhermedelecrode.orgs.ui
+package com.guilhermedelecrode.orgs.ui.activity
 
 import android.content.Intent
 import android.os.Bundle
