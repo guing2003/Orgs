@@ -21,6 +21,10 @@ class ListaProdutosActivity : AppCompatActivity() {
     // ViewBinding
     private lateinit var binding: ActivityListaProdutosBinding
 
+    private val produtoDao by lazy {
+        AppDatabase.instancia(this).produtoDao()
+    }
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -40,11 +44,16 @@ class ListaProdutosActivity : AppCompatActivity() {
         popup.setOnMenuItemClickListener { item ->
             when (item.itemId) {
                 R.id.menu_detalhes_produto_editar -> {
+                    val intent = Intent(this, FormularioProdutoActivity::class.java)
+                    intent.putExtra(CHAVE_PRODUTO_ID, produto.id)
+                    startActivity(intent)
                     Log.i("PopupMenu", "ListaProduto: editar")
                     true
                 }
 
                 R.id.menu_detalhes_produto_deletar -> {
+                    produto?.let{produtoDao.deleta(it)}
+                    adapter.atualiza(produtoDao.buscaTodos())
                     Log.i("PopupMenu", "ListaProduto: deletar")
                     true
                 }
@@ -56,8 +65,6 @@ class ListaProdutosActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
-        val db = AppDatabase.instancia(this)
-        val produtoDao = db.produtoDao()
         adapter.atualiza(produtoDao.buscaTodos())
     }
 
@@ -67,9 +74,8 @@ class ListaProdutosActivity : AppCompatActivity() {
         recyclerView.adapter = adapter
         recyclerView.layoutManager = LinearLayoutManager(this)
         adapter.quandoClicaNoItemlistener = {
-            Log.i("ListaProdutos", "quandoClica: ${it.nome}")
             val intent = Intent(this, DetalhesProdutoActivity::class.java).apply {
-                putExtra("produto", it)
+                putExtra(CHAVE_PRODUTO_ID, it.id)
             }
             startActivity(intent)
         }
