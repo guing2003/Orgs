@@ -4,10 +4,13 @@ import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.datastore.preferences.core.edit
 import androidx.lifecycle.lifecycleScope
 import br.com.alura.orgs.database.AppDatabase
 import br.com.alura.orgs.databinding.ActivityLoginBinding
 import br.com.alura.orgs.extensions.vaiPara
+import br.com.alura.orgs.preferences.dataStore
+import br.com.alura.orgs.preferences.usuariologado
 import kotlinx.coroutines.launch
 
 class LoginActivity : AppCompatActivity() {
@@ -35,9 +38,10 @@ class LoginActivity : AppCompatActivity() {
 
             lifecycleScope.launch {
                 usuarioDao.autentica(usuario, senha)?.let { usuario ->
-                    vaiPara(ListaProdutosActivity::class.java) {
-                        putExtra("CHAVE_USUARIO_ID", usuario.id)
+                    dataStore.edit { preferences ->
+                        preferences[usuariologado] = usuario.id
                     }
+                    vaiPara(ListaProdutosActivity::class.java)
                 }?: Toast.makeText(
                     this@LoginActivity,
                     "Usuário não encontrado",
