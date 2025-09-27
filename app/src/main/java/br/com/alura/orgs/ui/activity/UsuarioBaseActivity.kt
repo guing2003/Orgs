@@ -41,7 +41,7 @@ abstract class UsuarioBaseActivity : AppCompatActivity() {
         }
     }
 
-    private suspend fun buscaUsuario(string: String) {
+    protected suspend fun buscaUsuario(string: String) {
         _usuario.value = usuarioDao.buscaPorId(string).firstOrNull()
     }
 

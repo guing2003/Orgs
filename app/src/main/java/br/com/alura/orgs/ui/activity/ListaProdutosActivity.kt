@@ -64,9 +64,13 @@ class ListaProdutosActivity : UsuarioBaseActivity() {
                     deslogaUsuario()
                 }
             }
+            R.id.menu_lista_produtos_perfil -> {
+                vaiPara(PerfilActivity::class.java)
+            }
         }
         return super.onOptionsItemSelected(item)
     }
+
 
 
 
