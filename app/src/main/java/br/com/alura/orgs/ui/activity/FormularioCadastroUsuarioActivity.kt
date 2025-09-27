@@ -2,11 +2,11 @@ package br.com.alura.orgs.ui.activity
 
 import android.os.Bundle
 import android.util.Log
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import br.com.alura.orgs.database.AppDatabase
 import br.com.alura.orgs.databinding.ActivityFormularioCadastroUsuarioBinding
+import br.com.alura.orgs.extensions.toast
 import br.com.alura.orgs.model.Usuario
 import kotlinx.coroutines.launch
 
@@ -28,17 +28,21 @@ class FormularioCadastroUsuarioActivity : AppCompatActivity() {
 
     private fun configuraBotaoCadastrar() {
         binding.activityFormularioCadastroBotaoCadastrar.setOnClickListener {
-            val novoUsuario = criaUsuario()
-            Log.i("CadastroUsuario", "onCreate: $novoUsuario")
-            try {
-                lifecycleScope.launch {
-                    dao.salva(novoUsuario)
-                    finish()
-                }
-            } catch (e: Exception) {
-                Toast.makeText(this, "Erro ao criar novo Usúario!", Toast.LENGTH_SHORT).show()
-                Log.e("CadastroUsuario", "configuraBotaoCadastrar: $e")
+            val usuario = criaUsuario()
+            Log.i("CadastroUsuario", "onCreate: $usuario")
+            cadastraUsuario(usuario)
+        }
+    }
+
+    private fun cadastraUsuario(novoUsuario: Usuario) {
+        try {
+            lifecycleScope.launch {
+                dao.salva(novoUsuario)
+                finish()
             }
+        } catch (e: Exception) {
+            toast("Erro ao criar novo Usúario!")
+            Log.e("CadastroUsuario", "configuraBotaoCadastrar: $e")
         }
     }
 

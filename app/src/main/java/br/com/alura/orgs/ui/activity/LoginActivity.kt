@@ -8,6 +8,7 @@ import androidx.datastore.preferences.core.edit
 import androidx.lifecycle.lifecycleScope
 import br.com.alura.orgs.database.AppDatabase
 import br.com.alura.orgs.databinding.ActivityLoginBinding
+import br.com.alura.orgs.extensions.toast
 import br.com.alura.orgs.extensions.vaiPara
 import br.com.alura.orgs.preferences.dataStore
 import br.com.alura.orgs.preferences.usuariologadoPreferences
@@ -36,19 +37,19 @@ class LoginActivity : AppCompatActivity() {
             val senha = binding.activityLoginSenha.text.toString()
             Log.i("LoginActivity", "onCreate: $usuario - $senha")
 
-            lifecycleScope.launch {
-                usuarioDao.autentica(usuario, senha)?.let { usuario ->
-                    dataStore.edit { preferences ->
-                        preferences[usuariologadoPreferences] = usuario.id
-                    }
-                    vaiPara(ListaProdutosActivity::class.java)
-                }?: Toast.makeText(
-                    this@LoginActivity,
-                    "Usuário não encontrado",
-                    Toast.LENGTH_SHORT
-                ).show()
-            }
+            autenticaUsuario(usuario, senha)
 
+        }
+    }
+
+    private fun autenticaUsuario(usuario: String, senha: String) {
+        lifecycleScope.launch {
+            usuarioDao.autentica(usuario, senha)?.let { usuario ->
+                dataStore.edit { preferences ->
+                    preferences[usuariologadoPreferences] = usuario.id
+                }
+                vaiPara(ListaProdutosActivity::class.java)
+            } ?: toast("Usuário não encontrado")
         }
     }
 

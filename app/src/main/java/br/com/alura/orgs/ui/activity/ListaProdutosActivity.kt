@@ -2,7 +2,6 @@ package br.com.alura.orgs.ui.activity
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
@@ -16,6 +15,7 @@ import br.com.alura.orgs.preferences.dataStore
 import br.com.alura.orgs.preferences.usuariologadoPreferences
 import br.com.alura.orgs.ui.recyclerview.adapter.ListaProdutosAdapter
 import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.launch
 
 
@@ -41,27 +41,36 @@ class ListaProdutosActivity : AppCompatActivity() {
         configuraFab()
         lifecycleScope.launch {
             launch {
-                produtoDao.buscaTodos().collect { produtos ->
-                    adapter.atualiza(produtos)
-                }
+                verificaUsuarioLogado()
             }
+        }
+    }
 
-            launch {
-                dataStore.data.collect { preferences ->
-                    preferences[usuariologadoPreferences]?.let {
-                        launch {
-                            usuarioDao.buscaPorId(it).collect { usuarioId ->
-                                Log.i("ListaProdutosActivity", "onCreate: $it")
-                            }
-                        }
-                    } ?: vaiParaLogin()
+    private suspend fun verificaUsuarioLogado() {
+        dataStore.data.collect { preferences ->
+            preferences[usuariologadoPreferences]?.let { usuarioId ->
+                buscaUsuario(usuarioId)
+            } ?: vaiParaLogin()
+        }
+    }
 
+    private fun buscaUsuario(string: String) {
+        lifecycleScope.launch {
+            usuarioDao.buscaPorId(string).firstOrNull()?.let {
+                launch {
+                    buscaProdutosUsuario()
                 }
             }
         }
     }
 
-    private fun vaiParaLogin(){
+    private suspend fun buscaProdutosUsuario() {
+        produtoDao.buscaTodos().collect { produtos ->
+            adapter.atualiza(produtos)
+        }
+    }
+
+    private fun vaiParaLogin() {
         vaiPara(LoginActivity::class.java)
         finish()
     }
@@ -75,13 +84,17 @@ class ListaProdutosActivity : AppCompatActivity() {
         when (item.itemId) {
             R.id.menu_lista_produtos_sair -> {
                 lifecycleScope.launch {
-                    dataStore.edit { preferences ->
-                        preferences.remove(usuariologadoPreferences)
-                    }
+                    deslogaUsuario()
                 }
             }
         }
         return super.onOptionsItemSelected(item)
+    }
+
+    private suspend fun deslogaUsuario() {
+        dataStore.edit { preferences ->
+            preferences.remove(usuariologadoPreferences)
+        }
     }
 
 
