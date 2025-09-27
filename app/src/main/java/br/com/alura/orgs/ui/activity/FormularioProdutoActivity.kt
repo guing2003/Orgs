@@ -10,7 +10,7 @@ import br.com.alura.orgs.databinding.ActivityFormularioProdutoBinding
 import br.com.alura.orgs.extensions.tentaCarregarImagem
 import br.com.alura.orgs.model.Produto
 import br.com.alura.orgs.preferences.dataStore
-import br.com.alura.orgs.preferences.usuariologado
+import br.com.alura.orgs.preferences.usuariologadoPreferences
 import br.com.alura.orgs.ui.dialog.FormularioImagemDialog
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
@@ -48,7 +48,7 @@ class FormularioProdutoActivity : AppCompatActivity() {
         tentaCarregarProduto()
         lifecycleScope.launch {
             dataStore.data.collect { preferences ->
-                preferences[usuariologado]?.let {
+                preferences[usuariologadoPreferences]?.let {
                     usuarioDao.buscaPorId(it).collect { usuarioId ->
                         Log.i("FormularioProduto", "onCreate: $it")
                     }

@@ -10,7 +10,7 @@ import br.com.alura.orgs.database.AppDatabase
 import br.com.alura.orgs.databinding.ActivityLoginBinding
 import br.com.alura.orgs.extensions.vaiPara
 import br.com.alura.orgs.preferences.dataStore
-import br.com.alura.orgs.preferences.usuariologado
+import br.com.alura.orgs.preferences.usuariologadoPreferences
 import kotlinx.coroutines.launch
 
 class LoginActivity : AppCompatActivity() {
@@ -39,7 +39,7 @@ class LoginActivity : AppCompatActivity() {
             lifecycleScope.launch {
                 usuarioDao.autentica(usuario, senha)?.let { usuario ->
                     dataStore.edit { preferences ->
-                        preferences[usuariologado] = usuario.id
+                        preferences[usuariologadoPreferences] = usuario.id
                     }
                     vaiPara(ListaProdutosActivity::class.java)
                 }?: Toast.makeText(
