@@ -15,11 +15,12 @@ import br.com.alura.orgs.preferences.dataStore
 import br.com.alura.orgs.preferences.usuariologadoPreferences
 import br.com.alura.orgs.ui.recyclerview.adapter.ListaProdutosAdapter
 import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.launch
 
 
-class ListaProdutosActivity : AppCompatActivity() {
+class ListaProdutosActivity : UsuarioBaseActivity() {
 
     private val adapter = ListaProdutosAdapter(context = this)
     private val binding by lazy {
@@ -30,10 +31,6 @@ class ListaProdutosActivity : AppCompatActivity() {
         db.produtoDao()
     }
 
-    private val usuarioDao by lazy {
-        AppDatabase.instancia(this).usuarioDao()
-    }
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
@@ -41,38 +38,18 @@ class ListaProdutosActivity : AppCompatActivity() {
         configuraFab()
         lifecycleScope.launch {
             launch {
-                verificaUsuarioLogado()
-            }
-        }
-    }
-
-    private suspend fun verificaUsuarioLogado() {
-        dataStore.data.collect { preferences ->
-            preferences[usuariologadoPreferences]?.let { usuarioId ->
-                buscaUsuario(usuarioId)
-            } ?: vaiParaLogin()
-        }
-    }
-
-    private fun buscaUsuario(string: String) {
-        lifecycleScope.launch {
-            usuarioDao.buscaPorId(string).firstOrNull()?.let {
-                launch {
+                usuario.filterNotNull().collect {
                     buscaProdutosUsuario()
                 }
             }
         }
     }
 
+
     private suspend fun buscaProdutosUsuario() {
         produtoDao.buscaTodos().collect { produtos ->
             adapter.atualiza(produtos)
         }
-    }
-
-    private fun vaiParaLogin() {
-        vaiPara(LoginActivity::class.java)
-        finish()
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -91,11 +68,6 @@ class ListaProdutosActivity : AppCompatActivity() {
         return super.onOptionsItemSelected(item)
     }
 
-    private suspend fun deslogaUsuario() {
-        dataStore.edit { preferences ->
-            preferences.remove(usuariologadoPreferences)
-        }
-    }
 
 
     private fun configuraFab() {
